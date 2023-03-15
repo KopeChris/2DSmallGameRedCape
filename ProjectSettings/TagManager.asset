@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,11 +20,11 @@ TagManager:
   - PlayerCollisionBlocker
   - EnemyCollisionBlocker
   - PlayerAttack
-  - Hurtbox
+  - 
   - EnemyAttack
   - GroundOnly
-  - 
-  - 
+  - PlatformsOnly
+  - Platforms
   - 
   - 
   - 

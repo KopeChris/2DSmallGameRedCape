@@ -18,7 +18,10 @@ public class PlayerAttack : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent<Health>()!=null)
-        collision.GetComponent<Health>().TakeDamage(damage);
+        if(collision.GetComponent<ObjectHealth>()!=null)
+        collision.GetComponent<ObjectHealth>().TakeDamage(damage);
+
+        if(collision.GetComponent<EnemyHealth>()!=null)
+        collision.GetComponent<EnemyHealth>().TakeDamage(damage);
     }
 }

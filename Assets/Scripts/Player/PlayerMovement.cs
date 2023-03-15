@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer = 0f;
     float dashTimer = 0f;
 
+    public GameObject platformsOnly;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,9 +56,16 @@ public class PlayerMovement : MonoBehaviour
         facingDirection = facingRight ? 1 : -1;
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned)
+        if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical")>=0)
         {
             animator.SetTrigger("Jump");
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && !stunned && Input.GetAxisRaw("Vertical") < 0)
+        {
+            Debug.Log("jump down");
+            platformsOnly.SetActive(false);
+            Invoke("ActivatePlatformsOnly", 0.15f);
+
         }
 
         if (Input.GetButtonDown("Attack") && grounded && !stunned)
@@ -149,6 +158,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void ActivatePlatformsOnly()
+    {
+        platformsOnly.SetActive(true);
+    }    
 
     private void OnDrawGizmos()
     {

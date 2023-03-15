@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class PlayerCombat : MonoBehaviour
     public LayerMask enemyLayers;
     public bool invincible;
     Animator animator;
+
+    public float hurtIseconds;
 
     void Start()
     {
@@ -19,7 +23,17 @@ public class PlayerCombat : MonoBehaviour
 
     }
 
-
+    SpriteRenderer sprite;
+    public IEnumerator Flash()
+    {
+        for (float i = 0; i < hurtIseconds; i += 0.2f)
+        {
+            sprite.color = new Color(1, 1, 1, 0.4f);
+            yield return new WaitForSeconds(0.1f);
+            sprite.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 
     public void TakeDamage(float damage, float force)
     {
@@ -27,6 +41,7 @@ public class PlayerCombat : MonoBehaviour
         {
             currentHealth -= damage;
             GetComponent<PlayerMovement>().velocityX = force;
+            Flash();
         }
 
         if (currentHealth <= 0)
