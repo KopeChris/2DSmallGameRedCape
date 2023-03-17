@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject platformsOnly;
 
+    public float dashIseconds;
+    public CapsuleCollider2D PlayerHurtBox;
+    //public CapsuleCollider2D CollisionBlocker;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -56,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         facingDirection = facingRight ? 1 : -1;
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical")>=0)
+        if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical") >= 0)
         {
             animator.SetTrigger("Jump");
         }
@@ -75,24 +79,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Dash") && dashTimer <= 0 && !stunned && grounded)     //Dash button
         {
-            animator.SetTrigger("Dash");
-            dashTimer = dashCooldown;
-            velocityX = dashSpeed * facingDirection;        //maybe lerp and a few frames like the acc would be dashSpeed/number of frames to start
+            Dash();
         }
 
 
         if (!grounded)    //gravity changes
         {
-            if (rb.velocity.y < 1f && rb.velocity.y > -10f)
+            if (rb.velocity.y < 1f && rb.velocity.y > -12f)
             {
-                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (fallMultiplier - 1f) * Time.deltaTime;
+                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (fallMultiplier) * Time.deltaTime;
             }
             else if (rb.velocity.y > 1f && !Input.GetButton("Jump"))
             {   // smaller jump if not holding jump one would have no difference, less would make you jump more i
-                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (apexHeight - 1) * Time.deltaTime;
+                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (apexHeight) * Time.deltaTime;
             }
         }
     }
+
 
     void FixedUpdate()
     {
@@ -148,6 +151,16 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 
+    private void Dash()
+    {
+        animator.SetTrigger("Dash");
+        dashTimer = dashCooldown;
+        velocityX = dashSpeed * facingDirection;        //maybe lerp and a few frames like the acc would be dashSpeed/number of frames to start
+
+        Invincible();
+        Invoke(nameof(NotInvincible), dashIseconds);
+    }
+
     void OnCollisionEnter2D(Collision2D other)
     {
         // If the collision is with an object on the ground layer
@@ -161,12 +174,23 @@ public class PlayerMovement : MonoBehaviour
     void ActivatePlatformsOnly()
     {
         platformsOnly.SetActive(true);
-    }    
+    }
 
     private void OnDrawGizmos()
     {
-        // Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
+
+    void Invincible()
+    {
+        PlayerHurtBox.enabled = false;
+        //CollisionBlocker.enabled = false;
+    }
+    void NotInvincible()
+    {
+        PlayerHurtBox.enabled = true;
+        //CollisionBlocker.enabled = true;
+    }
 
 }
