@@ -10,8 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
 
     public float coyoteDuration = 0.2f;
-    public float apexHeight = 2f;
-    public float fallMultiplier = 2.5f;
+    public float fallMultiplier;
     [Space(5)]
     public float dashSpeed = 10f;  // dash speed
     public float dashCooldown = 1f; // cooldown time for dash
@@ -42,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     public CapsuleCollider2D PlayerHurtBox;
     //public CapsuleCollider2D CollisionBlocker;
 
+    public float jumpHeight;
+    public float jumpForce;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -59,14 +61,28 @@ public class PlayerMovement : MonoBehaviour
 
         facingDirection = facingRight ? 1 : -1;
 
+        //charges jump
+        if (Input.GetKey(KeyCode.Space) && (grounded || coyoteTimer > 0)  && Input.GetAxisRaw("Vertical") >= 0)
+        {
+            jumpHeight += 0.1f;
+            if(jumpHeight >= 1.0f)
+                jumpHeight = 1.0f;
+            if (jumpHeight <= 0.8f)
+                jumpForce = 0.8f;
+            else
+                jumpForce = 1;
+            Debug.Log(jumpForce);
+        }
 
+        //actually jumps
         if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical") >= 0)
         {
             animator.SetTrigger("Jump");
         }
+
+
         if (Input.GetKeyDown(KeyCode.Space) && !stunned && Input.GetAxisRaw("Vertical") < 0)
         {
-            Debug.Log("jump down");
             platformsOnly.SetActive(false);
             Invoke("ActivatePlatformsOnly", 0.15f);
 
@@ -82,16 +98,15 @@ public class PlayerMovement : MonoBehaviour
             Dash();
         }
 
+        if (rb.velocity.y < -12f)
+            animator.SetBool("FullLand", true);
+
 
         if (!grounded)    //gravity changes
         {
             if (rb.velocity.y < 1f && rb.velocity.y > -12f)
             {
-                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (fallMultiplier) * Time.deltaTime;
-            }
-            else if (rb.velocity.y > 1f && !Input.GetButton("Jump"))
-            {   // smaller jump if not holding jump one would have no difference, less would make you jump more i
-                rb.velocity += Vector2.up * -rb.gravityScale * 9.8f * (apexHeight) * Time.deltaTime;
+                rb.velocity += (fallMultiplier) * 9.8f * -rb.gravityScale * Time.deltaTime * Vector2.up;
             }
         }
     }

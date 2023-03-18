@@ -72245,8 +72245,8 @@ MonoBehaviour:
   acceleration: 35
   deceleration: 35
   airDeceleration: 10
-  groundCheckRadius: 0.2
-  coyoteDuration: 0.08
+  groundCheckRadius: 0.18
+  coyoteDuration: 0.06
   apexHeight: 0.6
   fallMultiplier: 1.1
   dashSpeed: 10
@@ -72263,6 +72263,7 @@ MonoBehaviour:
   platformsOnly: {fileID: 867234323}
   dashIseconds: 0.5
   PlayerHurtBox: {fileID: 1265764248}
+  jumpForce: 0
 --- !u!114 &1265764254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72797,7 +72798,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529314516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -0.45, z: 0}
+  m_LocalPosition: {x: 0.1, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72817,7 +72818,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -72828,7 +72829,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38, y: 0.1}
+  m_Size: {x: 0.38, y: 0.8}
   m_EdgeRadius: 0
 --- !u!1 &1549694258
 GameObject:

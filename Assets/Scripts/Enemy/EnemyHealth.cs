@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
-    int playerDirectionX;
+    //int playerDirectionX;
     Animator animator;
     Rigidbody2D rb;
 
@@ -18,10 +18,11 @@ public class EnemyHealth : MonoBehaviour
 
     void Update()
     {
+        /*
         if (PlayerMovement.posX - transform.position.x > 0)
             playerDirectionX = 1;
         else
-            playerDirectionX = -1;
+            playerDirectionX = -1;*/
     }
 
     public void TakeDamage(float damage)
