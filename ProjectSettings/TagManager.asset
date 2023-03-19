@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Player
-  - Enemy
-  - Objects
+  - PlayerHurtBox
+  - EnemyHurtBox
+  - ObjectHurtbox
   - PlayerCollisionBlocker
   - EnemyCollisionBlocker
   - PlayerAttack
