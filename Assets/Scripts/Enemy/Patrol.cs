@@ -6,7 +6,7 @@ public class Patrol : MonoBehaviour
 {
     public float speed = 2f;
     private Rigidbody2D rb;
-    private bool facingRight = false;
+    public bool facingRight = false;
     Animator animator;
     public bool stunned;
 
@@ -37,7 +37,7 @@ public class Patrol : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player") && !other.CompareTag("Enemy"))
+        if (other.CompareTag("Ground"))
             Flip();
     }
 

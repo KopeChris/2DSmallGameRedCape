@@ -7,7 +7,6 @@ public class PlayerCombat : MonoBehaviour
     public float maxHealth = 100;
     public float health;
     public float hurtIseconds;
-    public bool invincible;
     Animator animator;
 
     public SpriteRenderer sprite;
@@ -23,13 +22,13 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyUp(KeyCode.B))
+        if (Input.GetKeyUp(KeyCode.B))
         {
             TakeDamage(1);
         }
     }
 
-    
+
     public IEnumerator Flash()
     {
         for (float i = 0; i < hurtIseconds; i += 0.2f)
@@ -43,14 +42,13 @@ public class PlayerCombat : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (!invincible)
-        {
-            Invincible();
-            StartCoroutine(Flash());
-            Invoke(nameof(NotInvincible), hurtIseconds);
 
-            health -= damage;
-        }
+        Invincible();
+        StartCoroutine(Flash());
+        Invoke(nameof(NotInvincible), hurtIseconds);
+
+        health -= damage;
+
 
         if (health <= 0)
         {
@@ -64,13 +62,11 @@ public class PlayerCombat : MonoBehaviour
 
     void Invincible()
     {
-        invincible=true;
         PlayerHurtBox.enabled = false;
         //CollisionBlocker.enabled = false;
     }
     void NotInvincible()
     {
-        invincible=false;
         PlayerHurtBox.enabled = true;
         //CollisionBlocker.enabled = true;
     }

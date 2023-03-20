@@ -5,13 +5,15 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health;
+    public float maxHealth;
     //int playerDirectionX;
-    Animator animator;
+    public Animator animator;
     Rigidbody2D rb;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        if (GetComponent<Animator>() != null)
+            animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 

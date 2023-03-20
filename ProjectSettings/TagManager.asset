@@ -58,11 +58,11 @@ TagManager:
   - name: Objects
     uniqueID: 1724786963
     locked: 0
-  - name: Player
-    uniqueID: 2652319797
-    locked: 0
   - name: Enemies
     uniqueID: 4264113321
+    locked: 0
+  - name: Player
+    uniqueID: 2652319797
     locked: 0
   - name: Tiles
     uniqueID: 4780945
