@@ -44,8 +44,8 @@ public class PlayerCombat : MonoBehaviour
     {
 
         Invincible();
+        Invoke("NotInvincible", hurtIseconds);
         StartCoroutine(Flash());
-        Invoke(nameof(NotInvincible), hurtIseconds);
 
         health -= damage;
 

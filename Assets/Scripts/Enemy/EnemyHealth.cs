@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public bool canGetStunned = true;
     public float health;
     public float maxHealth;
-    //int playerDirectionX;
     public Animator animator;
     Rigidbody2D rb;
+
+    public SpriteRenderer sprite;
+
 
     void Start()
     {
@@ -18,26 +21,28 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    void Update()
-    {
-        /*
-        if (PlayerMovement.posX - transform.position.x > 0)
-            playerDirectionX = 1;
-        else
-            playerDirectionX = -1;*/
-    }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        StartCoroutine(FlashWhite());
 
         if (health <= 0)
         {
             animator.Play("Death");
         }
-        else
+        else if(canGetStunned)
         {
             animator.Play("Hurt");
         }
+    }
+
+    public IEnumerator FlashWhite()
+    {
+        sprite.color = new Color(1, 0.5f, 0.5f, 1);
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = new Color(1, 0.8f, 0.8f, 1);
+        yield return new WaitForSeconds(0.1f);
+        sprite.color = Color.white;
     }
 }

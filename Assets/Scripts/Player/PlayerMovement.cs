@@ -71,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
                 jumpForce = 0.8f;
             else
                 jumpForce = 1;
-            Debug.Log(jumpForce);
         }
 
         //actually jumps
