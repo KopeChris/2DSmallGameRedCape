@@ -10,7 +10,6 @@ public class EnemyFollowPlayer : MonoBehaviour
     public float acceleration;
     public float deceleration;
     public bool facingRight = true;
-    public int facingDirection;
     public int playerDirectionX;
 
     [Header("Attacks")]
@@ -54,7 +53,6 @@ public class EnemyFollowPlayer : MonoBehaviour
             animator.SetBool("Run", false);
         }
 
-        if (facingRight) { facingDirection = 1; } else { facingDirection = -1; }     //facing depends on x movement direction
         if (PlayerMovement.posX > rb.transform.position.x) { playerDirectionX = 1; } else { playerDirectionX = -1; }
 
         //seen

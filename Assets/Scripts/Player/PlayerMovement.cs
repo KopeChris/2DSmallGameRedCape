@@ -62,10 +62,10 @@ public class PlayerMovement : MonoBehaviour
         facingDirection = facingRight ? 1 : -1;
 
         //charges jump
-        if (Input.GetKey(KeyCode.Space) && (grounded || coyoteTimer > 0)  && Input.GetAxisRaw("Vertical") >= 0)
+        if (Input.GetKey(KeyCode.Space) && (grounded || coyoteTimer > 0) && Input.GetAxisRaw("Vertical") >= 0)
         {
             jumpHeight += 0.1f;
-            if(jumpHeight >= 1.0f)
+            if (jumpHeight >= 1.0f)
                 jumpHeight = 1.0f;
             if (jumpHeight <= 0.8f)
                 jumpForce = 0.8f;
@@ -131,12 +131,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        else if (grounded)     //if no input ground  or is stunned friction
+        else if (grounded)     //friction no input ground or stunned or dash friction
         {
             if (!dashing)
                 velocityX = Mathf.MoveTowards(rb.velocity.x, 0f, Time.fixedDeltaTime * deceleration);
             else
-                velocityX = Mathf.MoveTowards(velocityX, 0f, Time.fixedDeltaTime * dashDeceleration);
+                velocityX = Mathf.MoveTowards(rb.velocity.x, 0f, Time.fixedDeltaTime * dashDeceleration);
+
         }
 
         else if (!grounded)   //air friction
@@ -168,8 +169,12 @@ public class PlayerMovement : MonoBehaviour
     private void Dash()
     {
         animator.SetTrigger("Dash");
+        dashing = true;
         dashTimer = dashCooldown;
-        velocityX = dashSpeed * facingDirection;        //maybe lerp and a few frames like the acc would be dashSpeed/number of frames to start
+        if (horizontalInput == 0)
+            rb.velocity = Vector2.right * dashSpeed * facingDirection;        //maybe lerp and a few frames like the acc would be dashSpeed/number of frames to start
+        else
+            rb.velocity = Vector2.right * dashSpeed * horizontalInput;
 
         Invincible();
         Invoke(nameof(NotInvincible), dashIseconds);
