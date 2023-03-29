@@ -28,7 +28,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - PlayerOnly
   - 
   - 
   - 
@@ -66,4 +66,7 @@ TagManager:
     locked: 0
   - name: Tiles
     uniqueID: 4780945
+    locked: 0
+  - name: Foreground
+    uniqueID: 1328511301
     locked: 0

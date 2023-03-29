@@ -176,6 +176,9 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.velocity = Vector2.right * dashSpeed * horizontalInput;
 
+        if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))
+            Flip();
+
         Invincible();
         Invoke(nameof(NotInvincible), dashIseconds);
     }
