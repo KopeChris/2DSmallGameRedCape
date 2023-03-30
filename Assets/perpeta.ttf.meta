@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da840626a4a892b43adad4127fb89fc3
+guid: a3e753b9b4ec17949ba85952f656616e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Celtic Garamond the 2nd
+  - Perpetua
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

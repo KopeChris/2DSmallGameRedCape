@@ -12,12 +12,13 @@ public class PlayerCombat : MonoBehaviour
     public SpriteRenderer sprite;
     public CapsuleCollider2D PlayerHurtBox;
     //public CapsuleCollider2D CollisionBlocker;
-
+    Rigidbody2D rb;
 
     void Start()
     {
         health = maxHealth;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -58,6 +59,12 @@ public class PlayerCombat : MonoBehaviour
         {
             animator.SetTrigger("Hurt");
         }
+    }
+
+    public void Push(float force)
+    {
+        rb.AddForce(force * Vector2.right, ForceMode2D.Impulse);
+        animator.SetTrigger("Hurt");
     }
 
     void Invincible()
