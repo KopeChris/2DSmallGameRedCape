@@ -11,8 +11,7 @@ public class EnemyAttack : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerCombat>().TakeDamage(attackDamage);
-            collision.GetComponent<PlayerCombat>().Push(pushForce);
+            collision.GetComponent<PlayerCombat>().TakeDamage(attackDamage, pushForce);
         }
     }
 }

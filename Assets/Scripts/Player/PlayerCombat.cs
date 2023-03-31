@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -14,18 +14,21 @@ public class PlayerCombat : MonoBehaviour
     //public CapsuleCollider2D CollisionBlocker;
     Rigidbody2D rb;
 
+    public Slider slider;
+
     void Start()
     {
         health = maxHealth;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        SetMax(maxHealth);
     }
 
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.B))
         {
-            TakeDamage(1);
+            TakeDamage(1,0);
         }
     }
 
@@ -41,42 +44,30 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, float force)
     {
-
         Invincible();
         Invoke("NotInvincible", hurtIseconds);
         StartCoroutine(Flash());
 
         health -= damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
+        Set(health);
 
+        rb.AddForce(force * Vector2.right, ForceMode2D.Impulse);
 
         if (health <= 0)
         {
             Die();
+            Debug.Log("Death");
         }
         else
         {
-            animator.SetTrigger("Hurt");
+            animator.Play("Hurt");
+            Debug.Log("Hurt");
         }
     }
 
-    public void Push(float force)
-    {
-        rb.AddForce(force * Vector2.right, ForceMode2D.Impulse);
-        animator.SetTrigger("Hurt");
-    }
-
-    void Invincible()
-    {
-        PlayerHurtBox.enabled = false;
-        //CollisionBlocker.enabled = false;
-    }
-    void NotInvincible()
-    {
-        PlayerHurtBox.enabled = true;
-        //CollisionBlocker.enabled = true;
-    }
     void Die()
     {
         animator.Play("Death");
@@ -85,5 +76,31 @@ public class PlayerCombat : MonoBehaviour
         // reload the scene or show a game over screen
     }
 
+    public void Push(float force)
+    {
+        rb.AddForce(force * Vector2.right, ForceMode2D.Impulse);
+    }
 
+    void Invincible()
+    {
+        PlayerHurtBox.enabled = false;
+        //CollisionBlocker.enabled = false;
+    }
+
+    void NotInvincible()
+    {
+        PlayerHurtBox.enabled = true;
+        //CollisionBlocker.enabled = true;
+    }
+
+    public void SetMax(float max)
+    {
+        slider.maxValue = max;
+        slider.value = max;
+    }
+
+    public void Set(float value)
+    {
+        slider.value = value;
+    }
 }

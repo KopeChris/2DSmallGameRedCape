@@ -22,7 +22,7 @@ public class EnemyAttackProjectile : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerCombat>().TakeDamage(attackDamage);
+            collision.GetComponent<PlayerCombat>().TakeDamage(attackDamage,0);
         }
     }
 
