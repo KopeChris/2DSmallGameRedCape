@@ -41,9 +41,6 @@ public class PlayerMovement : MonoBehaviour
     public CapsuleCollider2D PlayerHurtBox;
     //public CapsuleCollider2D CollisionBlocker;
 
-    public float jumpHeight;
-    public float jumpForce;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -61,22 +58,15 @@ public class PlayerMovement : MonoBehaviour
 
         facingDirection = facingRight ? 1 : -1;
 
-        //charges jump
-        if (Input.GetKey(KeyCode.Space) && (grounded || coyoteTimer > 0) && Input.GetAxisRaw("Vertical") >= 0)
-        {
-            jumpHeight += 0.1f;
-            if (jumpHeight >= 1.0f)
-                jumpHeight = 1.0f;
-            if (jumpHeight <= 0.8f)
-                jumpForce = 0.8f;
-            else
-                jumpForce = 1;
-        }
 
-        //actually jumps
         if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical") >= 0)
         {
             animator.SetTrigger("Jump");
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 1)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y/2);
         }
 
 
@@ -96,9 +86,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Dash();
         }
-
-        if (rb.velocity.y < -12f)
-            animator.SetBool("FullLand", true);
 
 
         if (!grounded)    //gravity changes

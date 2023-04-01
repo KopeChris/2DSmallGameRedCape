@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : Explosion
 {
     public bool canGetStunned = true;
     public float health;
@@ -25,8 +25,9 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
         StartCoroutine(FlashWhite());
-
+        //HitEffect();
         if (health <= 0)
         {
             animator.Play("Death");

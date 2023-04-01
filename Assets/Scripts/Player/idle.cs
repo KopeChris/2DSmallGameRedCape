@@ -9,8 +9,6 @@ public class idle : StateMachineBehaviour
     {
         animator.GetComponent<PlayerMovement>().stunned = false;
         animator.GetComponent<PlayerMovement>().dashing = false;
-        animator.GetComponent<PlayerMovement>().jumpHeight = 0;
-        animator.SetBool("FullLand",false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
