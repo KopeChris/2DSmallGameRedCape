@@ -64,7 +64,6 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             animator.Play("Hurt");
-            Debug.Log("Hurt");
         }
     }
 

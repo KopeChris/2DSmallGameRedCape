@@ -158,3 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 5
+  explodeLayer:
+    serializedVersion: 2
+    m_Bits: 1048640
