@@ -4405,7 +4405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 168.49318, y: 3.11444, z: -13}
+  m_LocalPosition: {x: 168.48813, y: 3.11444, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -34988,7 +34988,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867234323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -0.45, z: 0}
+  m_LocalPosition: {x: 0.1, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35008,7 +35008,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -35019,7 +35019,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.38, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &884464674
 GameObject:
@@ -35812,6 +35812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 962976779}
   - component: {fileID: 962976778}
+  - component: {fileID: 962976780}
   m_Layer: 0
   m_Name: TitanWood
   m_TagString: Untagged
@@ -35888,6 +35889,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &962976780
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962976777}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c057835809a55e4c8c36b7962df13fa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &979401161
 GameObject:
   m_ObjectHideFlags: 0
@@ -37261,7 +37282,7 @@ SpriteRenderer:
   m_Size: {x: 1.6, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1135750775
@@ -38288,7 +38309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89353074dc9439340918ec0f4f9eec4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 6
   acceleration: 35
   deceleration: 35
   airDeceleration: 15
@@ -38321,7 +38342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa598f1cf1a75c42843313717ca6a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForceX: 3
+  jumpForceX: 4
   jumpForceY: 13
   rb: {fileID: 1265764249}
 --- !u!114 &1265764255
@@ -40217,7 +40238,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.3}
+  m_Offset: {x: 0, y: -0.05}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -40228,7 +40249,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38, y: 0.8}
+  m_Size: {x: 0.38, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &1538955864
 GameObject:
