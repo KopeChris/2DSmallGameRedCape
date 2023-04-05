@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyFollowPlayer : MonoBehaviour
+public class TitanWood : MonoBehaviour
 {
     public bool stunned;
     public bool run;
@@ -15,6 +15,10 @@ public class EnemyFollowPlayer : MonoBehaviour
     [Header("Attacks")]
     public bool playerDetected;
     public float attackRange = 1;
+    public float attackRange2 = 1;
+
+    public float cooldown;
+    float timer;
 
     [Space(10)]
     public SpriteRenderer sprite;
@@ -28,11 +32,13 @@ public class EnemyFollowPlayer : MonoBehaviour
     public float followRadius;
     public Transform SightPositionSphere;
     public Transform Attack;
+    public Transform Attack2;
 
     [SerializeField]
     public bool playerSeen { get; internal set; }
     public bool playerFollowed { get; internal set; }
     public bool PlayerInRange { get; internal set; }
+    public bool PlayerInRange2 { get; internal set; }
 
     private void Awake()
     {
@@ -50,6 +56,7 @@ public class EnemyFollowPlayer : MonoBehaviour
         if (stunned)
         {
             animator.ResetTrigger("Attack");
+            animator.ResetTrigger("Attack2");
             animator.SetBool("Run", false);
         }
 
@@ -70,21 +77,36 @@ public class EnemyFollowPlayer : MonoBehaviour
         //stop follow if out of follow range or if too close
         var follow = Physics2D.OverlapCircle(SightPositionSphere.position, followRadius, targetLayer);
         playerFollowed = follow != null;
-        if (playerFollowed == false || Mathf.Abs(PlayerMovement.posX - transform.position.x) < 1)
+        if (playerFollowed == false || Mathf.Abs(PlayerMovement.posX - transform.position.x) < 2)
         {
             animator.SetBool("Run", false);
             playerDetected = false;
 
         }
 
-        //In attack Range Player
-        var collider = Physics2D.OverlapCircle(Attack.position, attackRange, targetLayer);
-        PlayerInRange = collider != null;
-
-        if (PlayerInRange)
+        if (timer < 0)
         {
-            animator.SetTrigger("Attack");
+            //In attack Range Player
+            var collider = Physics2D.OverlapCircle(Attack.position, attackRange, targetLayer);
+            PlayerInRange = collider != null;
+
+            if (PlayerInRange)
+            {
+                animator.SetTrigger("Attack");
+                timer = cooldown;
+            }
+            var collider2 = Physics2D.OverlapCircle(Attack2.position, attackRange2, targetLayer);
+            PlayerInRange2 = collider2 != null;
+
+            if (PlayerInRange2)
+            {
+                animator.SetTrigger("Attack2");
+                timer = cooldown;
+            }
         }
+        Debug.Log(timer);
+        if (timer >= 0)
+            timer -= Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -129,6 +151,7 @@ public class EnemyFollowPlayer : MonoBehaviour
     {
         Gizmos.color = new Color(1, 0, 0, 0.7f);
         Gizmos.DrawWireSphere(Attack.position, attackRange);
+        Gizmos.DrawWireSphere(Attack2.position, attackRange2);
     }
 
 

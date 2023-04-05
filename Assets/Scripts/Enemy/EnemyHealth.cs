@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : Explosion
+public class EnemyHealth : MonoBehaviour
 {
     public bool canGetStunned = true;
     public float health;
