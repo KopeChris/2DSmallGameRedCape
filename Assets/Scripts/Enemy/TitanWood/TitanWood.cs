@@ -77,7 +77,7 @@ public class TitanWood : MonoBehaviour
         //stop follow if out of follow range or if too close
         var follow = Physics2D.OverlapCircle(SightPositionSphere.position, followRadius, targetLayer);
         playerFollowed = follow != null;
-        if (playerFollowed == false || Mathf.Abs(PlayerMovement.posX - transform.position.x) < 2)
+        if (playerFollowed == false || Mathf.Abs(PlayerMovement.posX - transform.position.x) < 1.5f)
         {
             animator.SetBool("Run", false);
             playerDetected = false;
@@ -120,6 +120,10 @@ public class TitanWood : MonoBehaviour
 
             rb.velocity = new Vector2(Mathf.MoveTowards(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y);
 
+        if (rb.velocity.y < 0)
+            rb.gravityScale = 2;
+        else
+            rb.gravityScale = 1;
 
         if (PlayerMovement.posX < transform.position.x && facingRight && !stunned && playerDetected)
         {

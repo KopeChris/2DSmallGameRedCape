@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class EnemyHealth : MonoBehaviour
 
     public SpriteRenderer sprite;
 
+    public Slider slider;
 
     void Start()
     {
         if (GetComponent<Animator>() != null)
             animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        SetMax(maxHealth);
     }
 
 
@@ -36,6 +40,8 @@ public class EnemyHealth : MonoBehaviour
         {
             animator.Play("Hurt");
         }
+
+        Set(health);
     }
 
     public IEnumerator FlashWhite()
@@ -45,5 +51,16 @@ public class EnemyHealth : MonoBehaviour
         sprite.color = new Color(1, 0.8f, 0.8f, 1);
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
+    }
+
+    public void SetMax(float max)
+    {
+        slider.maxValue = max;
+        slider.value = max;
+    }
+
+    public void Set(float value)
+    {
+        slider.value = value;
     }
 }
