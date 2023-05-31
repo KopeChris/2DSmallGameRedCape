@@ -104,7 +104,6 @@ public class TitanWood : MonoBehaviour
                 timer = cooldown;
             }
         }
-        Debug.Log(timer);
         if (timer >= 0)
             timer -= Time.deltaTime;
     }

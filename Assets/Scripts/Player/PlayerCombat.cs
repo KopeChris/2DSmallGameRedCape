@@ -59,7 +59,6 @@ public class PlayerCombat : MonoBehaviour
         if (health <= 0)
         {
             Die();
-            Debug.Log("Death");
         }
         else
         {

@@ -36,4 +36,9 @@ public class EnemyAttackProjectile : MonoBehaviour
         Destroy(this.gameObject);
 
     }
+    private void Update()
+    {
+        if (rb.velocity.y < -14)
+            rb.gravityScale = 0;
+    }
 }

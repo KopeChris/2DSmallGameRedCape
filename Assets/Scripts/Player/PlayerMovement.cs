@@ -35,11 +35,20 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer = 0f;
     float dashTimer = 0f;
 
+    bool halfYspeed;
     public GameObject platformsOnly;
 
     public float dashIseconds;
     public CapsuleCollider2D PlayerHurtBox;
     //public CapsuleCollider2D CollisionBlocker;
+
+    [SerializeField]
+    public float bufferTime = 0.2f;
+    private float jumpBufferCounter;
+    private float dropplatformsBuffer;
+    private float attackBufferCounter;
+    private float dashBufferCounter;
+    private float healBufferCounter;
 
     void Start()
     {
@@ -58,43 +67,67 @@ public class PlayerMovement : MonoBehaviour
 
         facingDirection = facingRight ? 1 : -1;
 
-
-        if (Input.GetKeyDown(KeyCode.Space) && (grounded || coyoteTimer > 0) && !stunned && Input.GetAxisRaw("Vertical") >= 0)
+        //inputs
+        if (Input.GetKeyDown(KeyCode.Space) && Input.GetAxisRaw("Vertical") >= 0)
+            jumpBufferCounter = bufferTime;
+        else if (jumpBufferCounter >= 0)
+            jumpBufferCounter -= Time.deltaTime;
+        if (jumpBufferCounter >= 0 && (grounded || coyoteTimer > 0) && !stunned)
         {
             animator.SetTrigger("Jump");
+            jumpBufferCounter = 0;
         }
-
-        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 1)
+                
+        if (grounded)
+            halfYspeed = true;
+        if (!Input.GetKey(KeyCode.Space) && rb.velocity.y<12 && rb.velocity.y > 1 && halfYspeed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y/2);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y / 2);
+            halfYspeed = false;
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Space) && !stunned && Input.GetAxisRaw("Vertical") < 0)
+        if (Input.GetKeyDown(KeyCode.Space) && Input.GetAxisRaw("Vertical") < 0)
+            dropplatformsBuffer = bufferTime;
+        else if (dropplatformsBuffer >= 0)
+            dropplatformsBuffer -= Time.deltaTime;
+        if (dropplatformsBuffer >= 0 && !stunned)
         {
             platformsOnly.SetActive(false);
             Invoke("ActivatePlatformsOnly", 0.15f);
-
+            dropplatformsBuffer = 0;
         }
 
-        if (Input.GetButtonDown("Attack") && grounded && !stunned)
+        if (Input.GetButtonDown("Attack"))
+            attackBufferCounter = bufferTime;
+        else if (attackBufferCounter >= 0)
+            attackBufferCounter -= Time.deltaTime;
+        if (attackBufferCounter > 0 && grounded && !stunned)
         {
             animator.SetTrigger("Attack");
+            attackBufferCounter = 0;
         }
 
-        if (Input.GetButtonDown("Dash") && dashTimer <= 0 && !stunned && grounded)     //Dash button
-        {
+        if (Input.GetButtonDown("Dash"))     //Dash button
+            dashBufferCounter = bufferTime;
+        else if (dashBufferCounter >= 0)
+            dashBufferCounter -= Time.deltaTime;
+        if (dashBufferCounter >= 0 && !stunned && grounded)    //&& dashTimer <= 0
             Dash();
-        }
 
 
-        if (!grounded)    //gravity changes
+
+        //gravity changes
+        if (!grounded && rb.velocity.y < 1f && rb.velocity.y > -12f)
         {
-            if (rb.velocity.y < 1f && rb.velocity.y > -12f)
-            {
-                rb.velocity += (fallMultiplier) * 9.8f * -rb.gravityScale * Time.deltaTime * Vector2.up;
-            }
+            rb.velocity += (fallMultiplier) * 9.8f * -rb.gravityScale * Time.deltaTime * Vector2.up;
+
         }
+
+        if (rb.velocity.y > -16)
+            rb.gravityScale = 2.3f;
+        else if (rb.velocity.y < -16)
+            rb.gravityScale = 0;
+
     }
 
 
@@ -142,8 +175,9 @@ public class PlayerMovement : MonoBehaviour
         {
             coyoteTimer -= Time.fixedDeltaTime;
         }
+        /*
         if (dashTimer > 0f)
-            dashTimer -= Time.fixedDeltaTime;
+            dashTimer -= Time.fixedDeltaTime;   */
 
     }
 
@@ -168,6 +202,7 @@ public class PlayerMovement : MonoBehaviour
 
         Invincible();
         Invoke(nameof(NotInvincible), dashIseconds);
+        dashBufferCounter = 0;
     }
 
     void OnCollisionEnter2D(Collision2D other)
